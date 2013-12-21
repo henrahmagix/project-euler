@@ -28,19 +28,19 @@ collatz.prototype.set = function(value) {
 collatz.prototype.run = function() {
   if (!this.end) {
     this.chain.push(this.n);
-    
+
     if (this.n === 1) {
       this.end = true;
       return this.chain;
     }
-    
-	/* Now using bitwise ops below.
+
+    /* Now using bitwise ops below.
     if (this.n % 2 === 0) this.n /= 2;
     else this.n = (3 * this.n) + 1;
     // */
-	if ((this.n & 1) === 0) this.n /= 2;
+    if ((this.n & 1) === 0) this.n /= 2;
     else this.n = (3 * this.n) + 1;
-	
+
     return this.run();
   }
   else return "End";
@@ -49,63 +49,63 @@ collatz.prototype.run = function() {
 collatz.prototype.runalt = function() {
   if (!this.end) {
     this.chain.push(this.n);
-    
+
     if (this.n > 1000) {
       this.end = true;
       return this.chain;
     }
-    
+
     if ((this.n - 1) % 3 === 0) this.n = (this.n - 1) / 3;
     else this.n *= 2;
-    
+
     return this.runalt();
   }
   else return "End";
 }
 
 function findCollatz() {
-	var num = 1000000; // One million.
-	var x = new collatz();
-	var terms = [ ], answer = [ ], saved = [ ], skipped = [ ];
-	var starter = 0;
+  var num = 1000000; // One million.
+  var x = new collatz();
+  var terms = [ ], answer = [ ], saved = [ ], skipped = [ ];
+  var starter = 0;
 
-	/*
-	for (var i=1000000; i>2; i--) {
-	  x.set(i);
-	  terms = x.run();
-	  if (terms.length > answer.length) {
-		answer = terms;
-		starter = i;
-	  }
-	}
-	// */
+  /*
+  for (var i=1000000; i>2; i--) {
+    x.set(i);
+    terms = x.run();
+    if (terms.length > answer.length) {
+    answer = terms;
+    starter = i;
+    }
+  }
+  // */
 
 
-	for (var i=1000000; i>2; i--) {
-	  if (saved.indexOf(i) === -1) {
-		x.set(i);
-		terms = x.run();
-		if (terms.length > answer.length) {
-		  answer = terms;
-		  saved = saved.concat(terms);
-		  //console.log(saved);
-		  starter = i;
-		  //break;
-		}
-	  }
-	  else {
-		skipped.push(i);
-	  }
-	}
-	console.log('Skipped ', skipped);
-	console.log('Answer ', answer.length, answer[0]);
-	console.log(answer);
-	// */
+  for (var i=1000000; i>2; i--) {
+    if (saved.indexOf(i) === -1) {
+    x.set(i);
+    terms = x.run();
+    if (terms.length > answer.length) {
+      answer = terms;
+      saved = saved.concat(terms);
+      //console.log(saved);
+      starter = i;
+      //break;
+    }
+    }
+    else {
+    skipped.push(i);
+    }
+  }
+  console.log('Skipped ', skipped);
+  console.log('Answer ', answer.length, answer[0]);
+  console.log(answer);
+  // */
 
-	/*
-	x.set(1000000);
-	console.log(x.run());
-	// */
+  /*
+  x.set(1000000);
+  console.log(x.run());
+  // */
 }
 var start = (new Date).getTime();
 findCollatz();
